@@ -65,7 +65,7 @@
             </div>
           </td>
           <td class="px-4 sm:px-6 py-3.5">
-            <button>
+            <button (click)="deleteCategory(row.id)" class="mr-4">
               <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
                 class="text-gray-700 cursor-pointer size-6 hover:text-error-500 dark:text-gray-400 dark:hover:text-error-500">
                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -74,7 +74,7 @@
               </svg>
             </button>
             <!-- ICONOS https://flowbite.com/icons/-->
-            <button (click)="openModalEdit()">
+            <button (click)="openModalEdit(row)">
               <svg
                 class="text-gray-700 cursor-pointer size-6 hover:text-green-500 dark:text-gray-400 dark:hover:text-green-500"
                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
@@ -112,7 +112,7 @@
           Agrega una nueva categoria para organizar tus productos
         </p>
       </div>
-      <form [formGroup]="newCategoryForm" class="flex flex-col" (ngSubmit)="guardarnuevaCategoria()">
+      <form [formGroup]="newCategoryForm" class="flex flex-col" (ngSubmit)="saveNewCategory()">
         <div class="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
           <div class="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
             <div class="col-span-2">
@@ -123,7 +123,7 @@
         </div>
         <div class="flex items-center gap-3 px-2 mt-6 lg:justify-end">
           <app-button size="sm" variant="outline" (btnClick)="closeModalNew()">Cacelar</app-button>
-          <app-button size="sm" (btnClick)="guardarnuevaCategoria()">Guardar</app-button>
+          <app-button size="sm" (btnClick)="saveNewCategory()">Guardar</app-button>
         </div>
       </form>
     </div>
@@ -145,18 +145,18 @@
           Edita la informacion de la categoria
         </p>
       </div>
-      <form class="flex flex-col" (ngSubmit)="actualziarCategoria()">
+      <form [formGroup]="updateCategoryForm" class="flex flex-col" (ngSubmit)="updateCategory()">
         <div class="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
           <div class="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
             <div class="col-span-2">
               <app-label>Nombre de la categoria</app-label>
-              <app-input-field type="text" />
+              <app-input-field type="text" formControlName="name" />
             </div>
           </div>
         </div>
         <div class="flex items-center gap-3 px-2 mt-6 lg:justify-end">
           <app-button size="sm" variant="outline" (btnClick)="closeModalEdit()">Cacelar</app-button>
-          <app-button size="sm" (btnClick)="actualziarCategoria()">Guardar</app-button>
+          <app-button size="sm" (btnClick)="updateCategory()">Guardar</app-button>
         </div>
       </form>
     </div>

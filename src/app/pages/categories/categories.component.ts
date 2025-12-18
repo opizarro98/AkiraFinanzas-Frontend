@@ -13,6 +13,7 @@ import { CreateCategoryDTO } from '../../shared/model/Category/CreateCategoryDTO
 import { AlertService } from '../../shared/services/alert.service';
 import { ModalAlertsComponent } from '../../shared/components/modal-alerts/modal-alerts.component';
 import { ModalComponent } from '../../shared/components/ui/modal/modal.component';
+import { UpdateCategoryDTO } from '../../shared/model/Category/UpdateCategoryDTO';
 
 
 @Component({
@@ -37,7 +38,13 @@ export class CategoriesComponent {
 
   // Variables 
   newCategory?: CreateCategoryDTO;
-  newCategoryForm = new FormGroup({
+  updateCategoryExist?: UpdateCategoryDTO;
+  newCategoryForm = new FormGroup({                               // Formulario para nueva categoría
+    name: new FormControl('', Validators.required),
+  });
+
+  updateCategoryForm = new FormGroup({                          // Formulario para actualizar categoría
+    id: new FormControl('', Validators.required),
     name: new FormControl('', Validators.required),
   });
   categories: any[] = [];
@@ -65,10 +72,17 @@ export class CategoriesComponent {
 
   // ACCIONES PARA EL MODAL DE EDITAR
   isOpenEdit = false;
-  openModalEdit() { this.isOpenEdit = true; }
+  openModalEdit(updateCategory: UpdateCategoryDTO) {
+    this.isOpenEdit = true;
+    this.updateCategoryForm.patchValue({
+      id: updateCategory.id,
+      name: updateCategory.name,
+    });
+  }
   closeModalEdit() { this.isOpenEdit = false; }
 
 
+  // Metodo para cargar categorias
   loadCategories(): void {
     this.categoryService.getAllActiveCategories().subscribe(
       (response) => {
@@ -80,7 +94,8 @@ export class CategoriesComponent {
     );
   }
 
-  guardarnuevaCategoria(): void {
+  // Metodo para guardar nueva categoria
+  saveNewCategory(): void {
     this.newCategory = {
       name: this.newCategoryForm.get('name')?.value || '',
     };
@@ -102,22 +117,40 @@ export class CategoriesComponent {
 
 
 
-  actualziarCategoria(): void {
-    console.log('Lógica para actualizar la categoría');
+  // Metodo para actualizar categoria existente
+  updateCategory(): void {
+    this.updateCategoryExist = {
+      id: this.updateCategoryForm.get('id')?.value || '',
+      name: this.updateCategoryForm.get('name')?.value || '',
+    };
+    this.categoryService.updateCategory(this.updateCategoryExist).subscribe(
+      (response) => {
+        this.closeModalEdit();
+        setTimeout(() => {
+          this.alertService.openModal('success', 'Categoría actualizada correctamente!');
+        }, 100);
+        this.loadCategories();
+      },
+      (error) => {
+        console.error('Error al actualizar categoría', error);
+      }
+    );
   }
 
-  user = {
-    firstName: 'Musharof',
-    lastName: 'Chowdhury',
-    email: 'randomuser@pimjo.com',
-    phone: '+09 363 398 46',
-    bio: 'Team Manager',
-    social: {
-      facebook: 'https://www.facebook.com/PimjoHQ',
-      x: 'https://x.com/PimjoHQ',
-      linkedin: 'https://www.linkedin.com/company/pimjo',
-      instagram: 'https://instagram.com/PimjoHQ',
-    },
-  };
+
+  // Metodo para eliminar categoria
+  deleteCategory(id: string): void {
+    this.categoryService.deleteCategory(id).subscribe(
+      (response) => {
+        setTimeout(() => {
+          this.alertService.openModal('success', 'Categoría eliminada correctamente!');
+        }, 100);
+        this.loadCategories();
+      },
+      (error) => {
+        console.error('Error al eliminar categoría', error);
+      }
+    );
+  }
 
 }

@@ -31,7 +31,7 @@ export class CategoryService {
     }
 
     // Método PUT para eliminar una categoría
-    deleteCategory(id: number): Observable<any> {
+    deleteCategory(id: string): Observable<any> {
         return this.http.put(`${this.apiUrl}/Delete/${id}`, null);
     }
 }
