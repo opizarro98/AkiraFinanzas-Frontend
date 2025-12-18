@@ -1,18 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { PageBreadcrumbComponent } from '../../shared/components/common/page-breadcrumb/page-breadcrumb.component';
-import { BadgeComponent } from '../../shared/components/ui/badge/badge.component';
 import { AvatarTextComponent } from '../../shared/components/ui/avatar/avatar-text.component';
-import { CheckboxComponent } from '../../shared/components/form/input/checkbox.component';
 import { ModalService } from '../../shared/services/modal.service';
 import { InputFieldComponent } from '../../shared/components/form/input/input-field.component';
 import { ButtonComponent } from '../../shared/components/ui/button/button.component';
 import { LabelComponent } from '../../shared/components/form/label/label.component';
 import { ModalComponent } from '../../shared/components/ui/modal/modal.component';
 import { CategoryService } from '../../shared/services/category/category.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CreateCategoryDTO } from '../../shared/model/Category/CreateCategoryDTO';
+import { HttpClientModule } from '@angular/common/http';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { InputFieldAKFComponent } from '../../shared/components/form/input/input-field-akf.component';
 
 @Component({
   selector: 'app-categories',
@@ -21,11 +19,10 @@ import { CreateCategoryDTO } from '../../shared/model/Category/CreateCategoryDTO
     CommonModule,
     PageBreadcrumbComponent,
     AvatarTextComponent,
-    InputFieldComponent,
+    InputFieldAKFComponent,
     ButtonComponent,
     LabelComponent,
     ModalComponent,
-    InputFieldComponent,
     HttpClientModule,
     ReactiveFormsModule,],
   templateUrl: './categories.component.html',
