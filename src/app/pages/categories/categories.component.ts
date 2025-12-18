@@ -3,14 +3,17 @@ import { Component } from '@angular/core';
 import { PageBreadcrumbComponent } from '../../shared/components/common/page-breadcrumb/page-breadcrumb.component';
 import { AvatarTextComponent } from '../../shared/components/ui/avatar/avatar-text.component';
 import { ModalService } from '../../shared/services/modal.service';
-import { InputFieldComponent } from '../../shared/components/form/input/input-field.component';
 import { ButtonComponent } from '../../shared/components/ui/button/button.component';
 import { LabelComponent } from '../../shared/components/form/label/label.component';
-import { ModalComponent } from '../../shared/components/ui/modal/modal.component';
 import { CategoryService } from '../../shared/services/category/category.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputFieldAKFComponent } from '../../shared/components/form/input/input-field-akf.component';
+import { CreateCategoryDTO } from '../../shared/model/Category/CreateCategoryDTO';
+import { AlertService } from '../../shared/services/alert.service';
+import { ModalAlertsComponent } from '../../shared/components/modal-alerts/modal-alerts.component';
+import { ModalComponent } from '../../shared/components/ui/modal/modal.component';
+
 
 @Component({
   selector: 'app-categories',
@@ -21,8 +24,9 @@ import { InputFieldAKFComponent } from '../../shared/components/form/input/input
     AvatarTextComponent,
     InputFieldAKFComponent,
     ButtonComponent,
-    LabelComponent,
+    ModalAlertsComponent,
     ModalComponent,
+    LabelComponent,
     HttpClientModule,
     ReactiveFormsModule,],
   templateUrl: './categories.component.html',
@@ -32,6 +36,7 @@ import { InputFieldAKFComponent } from '../../shared/components/form/input/input
 export class CategoriesComponent {
 
   // Variables 
+  newCategory?: CreateCategoryDTO;
   newCategoryForm = new FormGroup({
     name: new FormControl('', Validators.required),
   });
@@ -42,11 +47,11 @@ export class CategoriesComponent {
     public modal: ModalService,
     private categoryService: CategoryService,
     private fb: FormBuilder,
+    private alertService: AlertService,
   ) { }
 
   ngOnInit(): void {
     if (this.newCategoryForm.valid) {
-      console.log(this.newCategoryForm.value);
     }
     this.loadCategories();
   }
@@ -76,19 +81,30 @@ export class CategoriesComponent {
   }
 
   guardarnuevaCategoria(): void {
-    console.log('Formulario de nueva categoría:', this.newCategoryForm.value);
+    this.newCategory = {
+      name: this.newCategoryForm.get('name')?.value || '',
+    };
+
+    this.categoryService.createNewCategory(this.newCategory).subscribe(
+      (response) => {
+        this.closeModalNew();
+        setTimeout(() => {
+          this.alertService.openModal('success', 'Categoría guardada correctamente!');
+        }, 100);
+        this.loadCategories();
+        this.newCategoryForm.reset();
+      },
+      (error) => {
+        console.error('Error al crear categoría', error);
+      }
+    );
   }
+
 
 
   actualziarCategoria(): void {
     console.log('Lógica para actualizar la categoría');
   }
-
-
-
-
-
-
 
   user = {
     firstName: 'Musharof',
