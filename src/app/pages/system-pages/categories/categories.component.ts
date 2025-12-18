@@ -1,19 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { PageBreadcrumbComponent } from '../../shared/components/common/page-breadcrumb/page-breadcrumb.component';
-import { AvatarTextComponent } from '../../shared/components/ui/avatar/avatar-text.component';
-import { ModalService } from '../../shared/services/modal.service';
-import { ButtonComponent } from '../../shared/components/ui/button/button.component';
-import { LabelComponent } from '../../shared/components/form/label/label.component';
-import { CategoryService } from '../../shared/services/category/category.service';
+import { PageBreadcrumbComponent } from '../../../shared/components/common/page-breadcrumb/page-breadcrumb.component';
+import { AvatarTextComponent } from '../../../shared/components/ui/avatar/avatar-text.component';
+import { ModalService } from '../../../shared/services/modal.service';
+import { ButtonComponent } from '../../../shared/components/ui/button/button.component';
+import { LabelComponent } from '../../../shared/components/form/label/label.component';
+import { CategoryService } from '../../../shared/services/category/category.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { InputFieldAKFComponent } from '../../shared/components/form/input/input-field-akf.component';
-import { CreateCategoryDTO } from '../../shared/model/Category/CreateCategoryDTO';
-import { AlertService } from '../../shared/services/alert.service';
-import { ModalAlertsComponent } from '../../shared/components/modal-alerts/modal-alerts.component';
-import { ModalComponent } from '../../shared/components/ui/modal/modal.component';
-import { UpdateCategoryDTO } from '../../shared/model/Category/UpdateCategoryDTO';
+import { InputFieldAKFComponent } from '../../../shared/components/form/input/input-field-akf.component';
+import { CreateCategoryDTO } from '../../../shared/model/Category/CreateCategoryDTO';
+import { AlertService } from '../../../shared/services/alert.service';
+import { ModalAlertsComponent } from '../../../shared/components/modal-alerts/modal-alerts.component';
+import { ModalComponent } from '../../../shared/components/ui/modal/modal.component';
+import { UpdateCategoryDTO } from '../../../shared/model/Category/UpdateCategoryDTO';
 
 
 @Component({
