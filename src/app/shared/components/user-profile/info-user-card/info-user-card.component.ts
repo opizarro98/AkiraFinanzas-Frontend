@@ -37,7 +37,7 @@ export class InfoUserCardComponent {
 
   formPerson = new FormGroup
     ({
-      personId: new FormControl('', Validators.required),
+      personId: new FormControl({ value: '', disabled: true }),
       firstName: new FormControl('', Validators.required),
       middleName: new FormControl(''),
       lastName: new FormControl(''),
@@ -99,7 +99,7 @@ export class InfoUserCardComponent {
         (response) => {
           this.closeModalEdit();
           setTimeout(() => {
-            this.alertService.openModal('success', 'Categoría actualizada correctamente!');
+            this.alertService.openModal('success', 'Datos actualizados correctamente!');
           }, 100);
           this.loadUserData();
         },

@@ -20,6 +20,8 @@ import { SignUpComponent } from './pages/auth-pages/sign-up/sign-up.component';
 import { CalenderComponent } from './pages/calender/calender.component';
 import { CategoriesComponent } from './pages/system-pages/categories/categories.component';
 import { InfoUserCardComponent } from './shared/components/user-profile/info-user-card/info-user-card.component';
+import { MovementsComponent } from './pages/system-pages/movements/movements.component';
+import { AccountsComponent } from './pages/system-pages/accounts/accounts.component';
 
 export const routes: Routes = [
   {
@@ -42,6 +44,16 @@ export const routes: Routes = [
         path: 'user-profile',
         component: InfoUserCardComponent,
         title: 'Perfil de Usuario'
+      },
+      {
+        path: 'movements',
+        component: MovementsComponent,
+        title: 'Movimientos'
+      },
+      {
+        path: 'accounts',
+        component: AccountsComponent,
+        title: 'Cuentas de Usuario'
       },
       {
         path: 'calendar',

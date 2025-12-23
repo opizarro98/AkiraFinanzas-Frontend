@@ -56,7 +56,7 @@ export class InputFieldAKFComponent implements ControlValueAccessor {
   @Input() hint?: string;
   @Input() className: string = '';
 
-  value: string | number = '';  // El valor será gestionado por ControlValueAccessor
+  value: string | number = '';  // El valor seArá gestionado por ControlValueAccessor
 
   private onChange: (value: string | number) => void = () => { };  // Callback de cambio de valor
 
@@ -96,8 +96,8 @@ export class InputFieldAKFComponent implements ControlValueAccessor {
   onInput(event: Event): void {
     const input = event.target as HTMLInputElement;
     const newValue = this.type === 'number' ? +input.value : input.value;
-    this.value = newValue;  // Actualiza el valor local
-    this.onChange(newValue); // Notifica el cambio al formulario reactivo
+    this.value = newValue;
+    this.onChange(newValue);
   }
 
   // Método para notificar cuando el campo pierde el foco
