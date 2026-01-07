@@ -20,7 +20,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './signup-form.component.html',
   styles: ``
 })
-export class SignupFormComponent {
+export class OldSignupFormComponent {
 
   showPassword = false;
   isChecked = false;

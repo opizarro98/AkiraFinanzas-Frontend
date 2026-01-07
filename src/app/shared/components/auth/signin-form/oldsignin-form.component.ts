@@ -21,7 +21,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './signin-form.component.html',
   styles: ``
 })
-export class SigninFormComponent {
+export class OldSigninFormComponent {
 
   showPassword = false;
   isChecked = false;
