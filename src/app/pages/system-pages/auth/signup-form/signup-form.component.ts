@@ -9,12 +9,12 @@ import { AvatarTextComponent } from '../../../../shared/components/ui/avatar/ava
 import { ButtonComponent } from '../../../../shared/components/ui/button/button.component';
 import { ModalAlertsComponent } from '../../../../shared/components/modal-alerts/modal-alerts.component';
 import { HttpClientModule } from '@angular/common/http';
-import { CreatePersonDTO } from '../../../../shared/model/Person/CreatePersonDTO';
 import { CreateUserDTO } from '../../../../shared/model/User/CreateUserDTO';
 import { PersonService } from '../../../../shared/services/Person/Person.service';
 import { GetPersonCompleteDTO } from '../../../../shared/model/Person/GerPersonCompleteDTO';
 import { UserService } from '../../../../shared/services/user/User.service';
 import { AlertService } from '../../../../shared/services/alert.service';
+import { CreatePersonDTO } from '../../../../shared/model/Person/CreatePersonDTO';
 
 
 @Component({
