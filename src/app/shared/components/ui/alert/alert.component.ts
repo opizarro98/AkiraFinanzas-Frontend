@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-alert',
+  standalone: true,
   imports: [
     CommonModule,
     SafeHtmlPipe,
@@ -21,6 +22,7 @@ export class AlertComponent {
   @Input() showLink: boolean = false;
   @Input() linkHref: string = '#';
   @Input() linkText: string = 'Learn more';
+
 
   get variantClasses() {
     return {

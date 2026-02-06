@@ -3,11 +3,7 @@
     <!-- Default TextArea -->
     <div>
       <app-label>Description</app-label>
-      <app-text-area
-        [value]="message"
-        (valueChange)="message = $event"
-        [rows]="6"
-      ></app-text-area>
+      <app-text-area (valueChange)="message = $event" [rows]="6"></app-text-area>
     </div>
 
     <!-- Disabled TextArea -->
@@ -19,13 +15,8 @@
     <!-- Error TextArea -->
     <div>
       <app-label>Description</app-label>
-      <app-text-area
-        [rows]="6"
-        [value]="messageTwo"
-        [error]="true"
-        (valueChange)="messageTwo = $event"
-        hint="Please enter a valid message."
-      ></app-text-area>
+      <app-text-area [rows]="6" [error]="true" (valueChange)="messageTwo = $event"
+        hint="Please enter a valid message."></app-text-area>
     </div>
   </div>
 </app-component-card>

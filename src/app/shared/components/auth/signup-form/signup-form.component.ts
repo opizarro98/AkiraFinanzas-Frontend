@@ -4,41 +4,74 @@ import { LabelComponent } from '../../form/label/label.component';
 import { CheckboxComponent } from '../../form/input/checkbox.component';
 import { InputFieldComponent } from '../../form/input/input-field.component';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../../services/auth/auth.service';
+import { AlertComponent } from '../../ui/alert/alert.component';
+import { HttpClientModule } from '@angular/common/http';
+import { NotificationService } from '../../../services/notification.service';
+import { NotificationContainerComponent } from '../../ui/notification/notificationContainer.component';
 
 
 @Component({
   selector: 'app-signup-form',
+  standalone: true,
   imports: [
     CommonModule,
     LabelComponent,
     CheckboxComponent,
     InputFieldComponent,
+    NotificationContainerComponent,
     RouterModule,
     FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
   templateUrl: './signup-form.component.html',
+  providers: [AuthService],
   styles: ``
 })
 export class SignupFormComponent {
 
-  showPassword = false;
-  isChecked = false;
+  showAlert = false;
+  alertVariant: 'success' | 'error' | 'warning' | 'info' = 'info';
+  alertTitle = '';
+  alertMessage = '';
 
-  fname = '';
-  lname = '';
-  email = '';
-  password = '';
+  registerForm!: FormGroup; //formulario de registro
 
-  togglePasswordVisibility() {
-    this.showPassword = !this.showPassword;
+  constructor(private fb: FormBuilder, private authService: AuthService, private notificationService: NotificationService) {
+    this.registerForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      firstName: ['', Validators.required],
+      middleName: [''],
+      lastName: ['', Validators.required],
+      secondLastName: [''],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required]
+    });
   }
 
-  onSignIn() {
-    console.log('First Name:', this.fname);
-    console.log('Last Name:', this.lname);
-    console.log('Email:', this.email);
-    console.log('Password:', this.password);
-    console.log('Remember Me:', this.isChecked);
+  singup() {
+    /* if (this.registerForm.invalid) {
+       this.registerForm.markAllAsTouched();
+       return;
+     }*/
+
+    const formData = this.registerForm.value;
+
+    this.authService.userRegister(formData).subscribe({
+      next: (success: boolean) => {
+        if (success) {
+          this.notificationService.show('success', 'Registro exitoso', 'Usuario registrado correctamente');
+          this.registerForm.reset();
+        } else {
+          this.notificationService.show('error', 'Error', 'No se pudo registrar el usuario');
+        }
+      },
+      error: () => {
+        this.notificationService.show('error', 'Error del servidor', 'Ocurrió un problema inesperado');
+      }
+    });
   }
 }
