@@ -114,10 +114,61 @@
       </div>
       <form [formGroup]="newCategoryForm" class="flex flex-col" (ngSubmit)="saveNewCategory()">
         <div class="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
+<<<<<<< HEAD:src/app/pages/system-pages/categories/categories.component.html
           <div class="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
             <div class="col-span-2">
               <app-label>Nombre de la categoria</app-label>
               <app-input-field type="text" formControlName="name" />
+=======
+          <div>
+            <h5 class="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
+              Social Links
+            </h5>
+            <div class="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
+              <div>
+                <app-label>Facebook</app-label>
+                <app-input-field type="text"  />
+              </div>
+              <div>
+                <app-label>X.com</app-label>
+                <app-input-field type="text"  />
+              </div>
+              <div>
+                <app-label>Linkedin</app-label>
+                <app-input-field type="text" />
+              </div>
+              <div>
+                <app-label>Instagram</app-label>
+                <app-input-field type="text"  />
+              </div>
+            </div>
+          </div>
+          <div class="mt-7">
+            <h5 class="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
+              Personal Information
+            </h5>
+            <div class="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
+              <div class="col-span-2 lg:col-span-1">
+                <app-label>First Name</app-label>
+                <app-input-field type="text" />
+              </div>
+              <div class="col-span-2 lg:col-span-1">
+                <app-label>Last Name</app-label>
+                <app-input-field type="text" />
+              </div>
+              <div class="col-span-2 lg:col-span-1">
+                <app-label>Email Address</app-label>
+                <app-input-field type="text" />
+              </div>
+              <div class="col-span-2 lg:col-span-1">
+                <app-label>Phone</app-label>
+                <app-input-field type="text" />
+              </div>
+              <div class="col-span-2">
+                <app-label>Bio</app-label>
+                <app-input-field type="text" />
+              </div>
+>>>>>>> JWT:src/app/pages/categories/categories.component.html
             </div>
           </div>
         </div>

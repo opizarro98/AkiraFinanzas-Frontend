@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { NotificationContainerComponent } from './shared/components/ui/notification/notificationContainer.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterModule,
+    NotificationContainerComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

@@ -18,29 +18,44 @@ import { VideosComponent } from './pages/ui-elements/videos/videos.component';
 import { SignInComponent } from './pages/auth-pages/sign-in/sign-in.component';
 import { SignUpComponent } from './pages/auth-pages/sign-up/sign-up.component';
 import { CalenderComponent } from './pages/calender/calender.component';
+<<<<<<< HEAD
 import { CategoriesComponent } from './pages/system-pages/categories/categories.component';
 import { InfoUserCardComponent } from './shared/components/user-profile/info-user-card/info-user-card.component';
 import { MovementsComponent } from './pages/system-pages/movements/movements.component';
 import { AccountsComponent } from './pages/system-pages/accounts/accounts.component';
+=======
+import { CategoriesComponent } from './pages/categories/categories.component';
+import { AuthGuard } from './config/AuthGuard';
+>>>>>>> JWT
 
 export const routes: Routes = [
   {
     path: '',
+<<<<<<< HEAD
+=======
+    canActivate: [AuthGuard],
+>>>>>>> JWT
     component: AppLayoutComponent,
     children: [
       {
         path: '',
         component: EcommerceComponent,
+        canActivate: [AuthGuard],
         pathMatch: 'full',
         title:
           'Akira',
       },
       {
         path: 'categories',
+<<<<<<< HEAD
+=======
+        canActivate: [AuthGuard],
+>>>>>>> JWT
         component: CategoriesComponent,
         title: 'Categorias '
       },
       {
+<<<<<<< HEAD
         path: 'user-profile',
         component: InfoUserCardComponent,
         title: 'Perfil de Usuario'
@@ -76,6 +91,29 @@ export const routes: Routes = [
         title: 'Angular Basic Tables Dashboard | TailAdmin - Angular Admin Dashboard Template'
       },
       {
+=======
+        path: 'calendar',
+        canActivate: [AuthGuard],
+        component: CalenderComponent,
+        title: 'Angular Calender | TailAdmin - Angular Admin Dashboard Template'
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        title: 'Angular Profile Dashboard | TailAdmin - Angular Admin Dashboard Template'
+      },
+      {
+        path: 'form-elements',
+        component: FormElementsComponent,
+        title: 'Angular Form Elements Dashboard | TailAdmin - Angular Admin Dashboard Template'
+      },
+      {
+        path: 'basic-tables',
+        component: BasicTablesComponent,
+        title: 'Angular Basic Tables Dashboard | TailAdmin - Angular Admin Dashboard Template'
+      },
+      {
+>>>>>>> JWT
         path: 'blank',
         component: BlankComponent,
         title: 'Angular Blank Dashboard | TailAdmin - Angular Admin Dashboard Template'
