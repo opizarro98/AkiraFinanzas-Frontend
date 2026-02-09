@@ -56,6 +56,7 @@ export class SigninFormComponent {
     if (this.loginForm.valid) {
       this.authService.signIn(formData).subscribe({
         next: (response) => {
+          this.authService.saveToken(response.token);
           this.notificationService.show('success', 'Inicio de sesión exitoso', 'Has iniciado sesión correctamente.');
           this.router.navigate(['/']);
         },
