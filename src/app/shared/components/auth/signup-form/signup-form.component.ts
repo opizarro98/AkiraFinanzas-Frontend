@@ -3,13 +3,11 @@ import { Component } from '@angular/core';
 import { LabelComponent } from '../../form/label/label.component';
 import { CheckboxComponent } from '../../form/input/checkbox.component';
 import { InputFieldComponent } from '../../form/input/input-field.component';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth/auth.service';
-import { AlertComponent } from '../../ui/alert/alert.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NotificationService } from '../../../services/notification.service';
-import { NotificationContainerComponent } from '../../ui/notification/notificationContainer.component';
 
 
 @Component({
@@ -20,7 +18,6 @@ import { NotificationContainerComponent } from '../../ui/notification/notificati
     LabelComponent,
     CheckboxComponent,
     InputFieldComponent,
-    NotificationContainerComponent,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
@@ -39,7 +36,7 @@ export class SignupFormComponent {
 
   registerForm!: FormGroup; //formulario de registro
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private notificationService: NotificationService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private notificationService: NotificationService, private router: Router) {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -53,10 +50,10 @@ export class SignupFormComponent {
   }
 
   singup() {
-    /* if (this.registerForm.invalid) {
-       this.registerForm.markAllAsTouched();
-       return;
-     }*/
+    if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
+      return;
+    }
 
     const formData = this.registerForm.value;
 
@@ -65,6 +62,7 @@ export class SignupFormComponent {
         if (success) {
           this.notificationService.show('success', 'Registro exitoso', 'Usuario registrado correctamente');
           this.registerForm.reset();
+          this.router.navigate(['/']);
         } else {
           this.notificationService.show('error', 'Error', 'No se pudo registrar el usuario');
         }
@@ -74,4 +72,12 @@ export class SignupFormComponent {
       }
     });
   }
+
+  showPassword = false;
+  isChecked = false;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
 }
