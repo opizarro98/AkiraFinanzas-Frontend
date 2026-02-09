@@ -18,7 +18,7 @@ export class NotificationService {
 
     private idCounter = 0;
 
-    show(variant: 'success' | 'error' | 'warning' | 'info', title: string, message: string, duration = 5000) {
+    show(variant: 'success' | 'error' | 'warning' | 'info', title: string, message: string, duration = 3000) {
         const id = ++this.idCounter;
         const notification: AppNotification = { id, variant, title, message };
 

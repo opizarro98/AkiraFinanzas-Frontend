@@ -24,7 +24,7 @@ import { AlertComponent } from '../alert/alert.component';
   styles: [`
     .notification-container {
       position: fixed;
-      top: 1rem;
+      top: 5rem;
       right: 1rem;
       z-index: 9999;
       display: flex;
