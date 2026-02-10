@@ -20,6 +20,7 @@ import { SignUpComponent } from './pages/auth-pages/sign-up/sign-up.component';
 import { CalenderComponent } from './pages/calender/calender.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { AuthGuard } from './config/AuthGuard';
+import { AccountComponent } from './pages/accounts/account.component';
 
 export const routes: Routes = [
   {
@@ -53,9 +54,9 @@ export const routes: Routes = [
         title: 'Angular Profile Dashboard | TailAdmin - Angular Admin Dashboard Template'
       },
       {
-        path: 'form-elements',
-        component: FormElementsComponent,
-        title: 'Angular Form Elements Dashboard | TailAdmin - Angular Admin Dashboard Template'
+        path: 'accounts',
+        component: AccountComponent,
+        title: 'Mis Cuentas'
       },
       {
         path: 'basic-tables',
