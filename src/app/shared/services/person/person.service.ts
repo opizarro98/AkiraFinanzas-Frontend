@@ -1,0 +1,25 @@
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { environment } from "../../../../environments/enviroments.";
+import { RegisterRequest } from "../../models/authapp/RegisterRequest";
+import { AuthRequest } from "../../models/authapp/AuthRequest";
+import { Observable } from "rxjs";
+import { BasicPersonalDataResponseDTO } from "../../models/person/BasicPersonalDataResponseDTO";
+
+@Injectable({
+    providedIn: 'root'
+})
+export class PersonService {
+
+    apiUrl: string;
+    private readonly TOKEN_KEY = 'auth_token';
+
+    constructor(private http: HttpClient) {
+        this.apiUrl = environment.urlHost + 'person';
+    }
+
+    //Metodo para obtener los datos de la persona
+    getPersonalData(personId: string): Observable<BasicPersonalDataResponseDTO> {
+        return this.http.get<BasicPersonalDataResponseDTO>(`${this.apiUrl}/personalData/${personId}`);
+    }
+}

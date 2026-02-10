@@ -37,6 +37,31 @@ export const routes: Routes = [
           'Akira',
       },
       {
+        path: 'profile',
+        component: ProfileComponent,
+        title: 'Mi Perfil'
+      },
+
+      {
+        path: 'accounts',
+        component: AccountComponent,
+        title: 'Mis Cuentas'
+      },
+
+
+
+
+
+
+
+
+      {
+        path: 'forms/form-elements',
+        component: FormElementsComponent,
+        title: 'Angular Form Elements Dashboard | TailAdmin - Angular Admin Dashboard Template'
+      },
+
+      {
         path: 'categories',
         canActivate: [AuthGuard],
         component: CategoriesComponent,
@@ -52,11 +77,6 @@ export const routes: Routes = [
         path: 'profile',
         component: ProfileComponent,
         title: 'Angular Profile Dashboard | TailAdmin - Angular Admin Dashboard Template'
-      },
-      {
-        path: 'accounts',
-        component: AccountComponent,
-        title: 'Mis Cuentas'
       },
       {
         path: 'basic-tables',
