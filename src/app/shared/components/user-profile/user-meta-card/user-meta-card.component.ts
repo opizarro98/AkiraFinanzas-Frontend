@@ -4,47 +4,42 @@ import { ModalService } from '../../../services/modal.service';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from '../../ui/modal/modal.component';
 import { ButtonComponent } from '../../ui/button/button.component';
+import { PersonService } from '../../../services/person/person.service';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-user-meta-card',
   imports: [
     CommonModule,
-    ModalComponent,
-    InputFieldComponent,
-    ButtonComponent,
   ],
   templateUrl: './user-meta-card.component.html',
   styles: ``
 })
 export class UserMetaCardComponent {
 
-  constructor(public modal: ModalService) {}
+  firstName!: string;
+  lastName !: string;
 
-  isOpen = false;
-  openModal() { this.isOpen = true; }
-  closeModal() { this.isOpen = false; }
+  constructor(public modal: ModalService, private personService: PersonService, private notificationService: NotificationService) { }
+
+  ngOnInit() {
+    this.loadName();
+  }
+
+  loadName() {
+    this.personService.getPersonalData().subscribe({
+      next: (response) => {
+        this.firstName = response.firstName;
+        this.lastName = response.lastName;
+      },
+      error: () => {
+        this.notificationService.show('error', 'Error', 'Servicio no disponible, intente mas tarde.');
+      }
+    });
+  }
 
   // Example user data (could be made dynamic)
   user = {
-    firstName: 'Musharof',
-    lastName: 'Chowdhury',
-    role: 'Team Manager',
-    location: 'Arizona, United States',
     avatar: '/images/user/owner.jpg',
-    social: {
-      facebook: 'https://www.facebook.com/PimjoHQ',
-      x: 'https://x.com/PimjoHQ',
-      linkedin: 'https://www.linkedin.com/company/pimjo',
-      instagram: 'https://instagram.com/PimjoHQ',
-    },
-    email: 'randomuser@pimjo.com',
-    phone: '+09 363 398 46',
-    bio: 'Team Manager',
   };
-
-  handleSave() {
-    // Handle save logic here
-    console.log('Saving changes...');
-    this.modal.closeModal();
-  }
 }

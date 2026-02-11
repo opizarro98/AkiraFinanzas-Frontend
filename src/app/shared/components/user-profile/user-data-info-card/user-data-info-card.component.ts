@@ -5,44 +5,57 @@ import { InputFieldComponent } from '../../form/input/input-field.component';
 import { ButtonComponent } from '../../ui/button/button.component';
 import { LabelComponent } from '../../form/label/label.component';
 import { ModalComponent } from '../../ui/modal/modal.component';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
-  selector: 'app-user-info-card',
+  selector: 'app-user-data-info-card',
   imports: [
     CommonModule,
     InputFieldComponent,
     ButtonComponent,
     LabelComponent,
     ModalComponent,
+    FormsModule,
   ],
-  templateUrl: './user-info-card.component.html',
+  templateUrl: './user-data-info-card.component.html',
   styles: ``
 })
-export class UserInfoCardComponent {
+export class UserDataInfoCardComponent {
 
-  constructor(public modal: ModalService) {}
+  username: string | null = null;
+  showPassword = false;
+
+  constructor(public modal: ModalService, private authService: AuthService) { }
 
   isOpen = false;
   openModal() { this.isOpen = true; }
   closeModal() { this.isOpen = false; }
 
-  user = {
-    firstName: 'Musharof',
-    lastName: 'Chowdhury',
-    email: 'randomuser@pimjo.com',
-    phone: '+09 363 398 46',
-    bio: 'Team Manager',
-    social: {
-      facebook: 'https://www.facebook.com/PimjoHQ',
-      x: 'https://x.com/PimjoHQ',
-      linkedin: 'https://www.linkedin.com/company/pimjo',
-      instagram: 'https://instagram.com/PimjoHQ',
-    },
+
+  ngOnInit() {
+    this.loadData();
+  }
+
+  loadData() {
+    this.username = this.authService.getUserName();
+    console.log("suername es: " + this.username);
+  }
+
+  address = {
+    country: 'United States.',
+    cityState: 'Phoenix, Arizona, United States.',
+    postalCode: 'ERT 2489',
+    taxId: 'AS4568384',
   };
 
   handleSave() {
     // Handle save logic here
     console.log('Saving changes...');
     this.modal.closeModal();
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }

@@ -11,7 +11,6 @@ import { CreateAccountRequestDTO } from "../../models/account/CreateAccountReque
 export class AccountService {
 
     apiUrl: string;
-    private readonly TOKEN_KEY = 'auth_token';
 
     constructor(private http: HttpClient) {
         this.apiUrl = environment.urlHost + 'accounts';

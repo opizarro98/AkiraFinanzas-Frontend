@@ -1,5 +1,4 @@
 export interface BasicPersonalDataResponseDTO {
-    personId: string;
     firstName: string;
     middleName: string;
     lastName: string;

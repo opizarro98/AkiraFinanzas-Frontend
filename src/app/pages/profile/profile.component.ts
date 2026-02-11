@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { PageBreadcrumbComponent } from '../../shared/components/common/page-breadcrumb/page-breadcrumb.component';
 import { UserMetaCardComponent } from '../../shared/components/user-profile/user-meta-card/user-meta-card.component';
-import { UserInfoCardComponent } from '../../shared/components/user-profile/user-info-card/user-info-card.component';
-import { UserAddressCardComponent } from '../../shared/components/user-profile/user-address-card/user-address-card.component';
+import { UserPersonalInfoCardComponent } from '../../shared/components/user-profile/user-personal-info-card/user-personal-info-card.component';
+import { UserDataInfoCardComponent } from '../../shared/components/user-profile/user-data-info-card/user-data-info-card.component';
 
 @Component({
   selector: 'app-profile',
@@ -11,8 +11,8 @@ import { UserAddressCardComponent } from '../../shared/components/user-profile/u
     CommonModule,
     PageBreadcrumbComponent,
     UserMetaCardComponent,
-    UserInfoCardComponent,
-    UserAddressCardComponent,
+    UserDataInfoCardComponent,
+    UserPersonalInfoCardComponent,
   ],
   templateUrl: './profile.component.html',
   styles: ``
