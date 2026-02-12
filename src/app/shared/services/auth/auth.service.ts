@@ -3,6 +3,8 @@ import { Injectable } from "@angular/core";
 import { environment } from "../../../../environments/enviroments.";
 import { RegisterRequest } from "../../models/authapp/RegisterRequest";
 import { AuthRequest } from "../../models/authapp/AuthRequest";
+import { Observable } from "rxjs";
+import { UpdatePassRequestDTO } from "../../models/authapp/UpdatePassRequestDTO";
 
 @Injectable({
     providedIn: 'root'
@@ -41,6 +43,16 @@ export class AuthService {
     //Metodo para verificar si el usuario esta logueado
     isLoggedIn(): boolean {
         return !!this.getToken();
+    }
+
+    //Metodo para verificar si la contraseña anterior es correcta
+    passwordIsCorrect(password: string): Observable<boolean> {
+        return this.http.get<boolean>(`${this.apiUrl}/validPassword/${password}`);
+    }
+
+    //Metodo para cambiar la contraseña
+    changePassword(data: UpdatePassRequestDTO) {
+        return this.http.post<{ token: string }>(`${this.apiUrl}/UpdatePassword`, data);
     }
 
     getUserName(): string | null {

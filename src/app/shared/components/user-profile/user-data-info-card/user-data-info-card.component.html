@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
     <div>
       <h4 class="text-lg font-semibold text-gray-800 dark:text-white/90 lg:mb-6">
-        Usuario
+        Credenciales
       </h4>
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-7 2xl:gap-x-32">
         <div>
@@ -31,7 +31,7 @@
           d="M15.0911 2.78206C14.2125 1.90338 12.7878 1.90338 11.9092 2.78206L4.57524 10.116C4.26682 10.4244 4.0547 10.8158 3.96468 11.2426L3.31231 14.3352C3.25997 14.5833 3.33653 14.841 3.51583 15.0203C3.69512 15.1996 3.95286 15.2761 4.20096 15.2238L7.29355 14.5714C7.72031 14.4814 8.11172 14.2693 8.42013 13.9609L15.7541 6.62695C16.6327 5.74827 16.6327 4.32365 15.7541 3.44497L15.0911 2.78206ZM12.9698 3.84272C13.2627 3.54982 13.7376 3.54982 14.0305 3.84272L14.6934 4.50563C14.9863 4.79852 14.9863 5.2734 14.6934 5.56629L14.044 6.21573L12.3204 4.49215L12.9698 3.84272ZM11.2597 5.55281L5.6359 11.1766C5.53309 11.2794 5.46238 11.4099 5.43238 11.5522L5.01758 13.5185L6.98394 13.1037C7.1262 13.0737 7.25666 13.003 7.35947 12.9002L12.9833 7.27639L11.2597 5.55281Z"
           fill="" />
       </svg>
-      Edit
+      Cambiar Contraseña
     </button>
   </div>
 
@@ -46,17 +46,18 @@
           Una contraseña segura debe tener al menos 8 caracteres, combinar mayúsculas, minúsculas, números y símbolos
         </p>
       </div>
-      <form class="flex flex-col" (ngSubmit)="handleSave()">
+      <form [formGroup]="passwordchancgeForm" class="flex flex-col" (ngSubmit)="updatePassword()">
         <div class="px-2 overflow-y-auto custom-scrollbar">
           <div class="grid grid-cols-1 gap-x-6 gap-y-5">
             <div>
               <app-label>Contraseña Actual<span class="text-error-500">*</span></app-label>
               <div class="relative">
-                <app-input-field [type]="showPassword ? 'text' : 'password'" placeholder="Inresa tu contraseña actual"
-                  class="form-input" required />
-                <span (click)="togglePasswordVisibility()"
+                <app-input-field [type]="showOldPassword ? 'text' : 'password'"
+                  placeholder="Inresa tu contraseña actual" class="form-input" required formControlName="oldPassword"
+                  (blur)="ispassvalid()" />
+                <span (click)="toggleOldPasswordVisibility()"
                   class="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2">
-                  @if (showPassword) {
+                  @if (showOldPassword) {
                   <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
                     class="fill-gray-500 dark:fill-gray-400 size-5">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -73,6 +74,16 @@
                   }
                 </span>
               </div>
+              @if (oldPassIsValid === true) {
+              <p class="mt-1 text-sm text-green-600">
+                ✔ La contraseña coincide
+              </p>
+              }
+              @if (oldPassIsValid === false) {
+              <p class="mt-1 text-sm text-red-600">
+                ✖ La contraseña actual no coincide
+              </p>
+              }
             </div>
           </div>
           <br>
@@ -80,11 +91,11 @@
             <div>
               <app-label>Nueva Contraseña<span class="text-error-500">*</span></app-label>
               <div class="relative">
-                <app-input-field [type]="showPassword ? 'text' : 'password'" placeholder="Inresa tu nueva contraseña"
-                  class="form-input" required />
-                <span (click)="togglePasswordVisibility()"
+                <app-input-field [type]="showNewPassword ? 'text' : 'password'" placeholder="Inresa tu nueva contraseña"
+                  class="form-input" formControlName="newPassword" required (input)="confirmPassMismatch = null" />
+                <span (click)="toggleNewPasswordVisibility()"
                   class="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2">
-                  @if (showPassword) {
+                  @if (showNewPassword) {
                   <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
                     class="fill-gray-500 dark:fill-gray-400 size-5">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -105,11 +116,12 @@
             <div>
               <app-label>Confrima tu contraseña <span class="text-error-500">*</span></app-label>
               <div class="relative">
-                <app-input-field [type]="showPassword ? 'text' : 'password'" placeholder="Confirma tu contrseña nueva"
-                  class="form-input" required />
-                <span (click)="togglePasswordVisibility()"
+                <app-input-field [type]="showConfirmPassword ? 'text' : 'password'"
+                  placeholder="Confirma tu contrseña nueva" class="form-input" required
+                  formControlName="confirmPassword" (input)="confirmPassMismatch = null" />
+                <span (click)="toggleConfrimPasswordVisibility()"
                   class="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2">
-                  @if (showPassword) {
+                  @if (showConfirmPassword) {
                   <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
                     class="fill-gray-500 dark:fill-gray-400 size-5">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -126,12 +138,29 @@
                   }
                 </span>
               </div>
+              @if (confirmPassMismatch === true) {
+              <p class="mt-1 text-sm text-green-600">
+                ✔ La contraseña coincide
+              </p>
+              }
+              @if (confirmPassMismatch === false) {
+              <p class="mt-1 text-sm text-red-600">
+                ✖ La contraseña actual no coincide
+              </p>
+              }
             </div>
+            @if (passwordchancgeForm.hasError('passwordMismatch')
+            && passwordchancgeForm.get('confirmPassword')?.touched) {
+            <p class="mt-1 text-sm text-red-600">
+              Las contraseñas no coinciden
+            </p>
+            }
           </div>
         </div>
         <div class="flex items-center gap-3 px-2 mt-6 lg:justify-end">
           <app-button size="sm" variant="outline" (btnClick)="closeModal()">Cancelar</app-button>
-          <app-button size="sm" (btnClick)="handleSave()">Guardar Cambios</app-button>
+          <app-button size="sm" (btnClick)="passwordMatchValidator()">Guardar
+            Cambios</app-button>
         </div>
       </form>
     </div>
