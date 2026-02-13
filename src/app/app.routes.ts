@@ -47,6 +47,11 @@ export const routes: Routes = [
         component: AccountComponent,
         title: 'Mis Cuentas'
       },
+      {
+        path: 'categories',
+        component: CategoriesComponent,
+        title: 'Categorias'
+      },
 
 
 
@@ -59,13 +64,6 @@ export const routes: Routes = [
         path: 'forms/form-elements',
         component: FormElementsComponent,
         title: 'Angular Form Elements Dashboard | TailAdmin - Angular Admin Dashboard Template'
-      },
-
-      {
-        path: 'categories',
-        canActivate: [AuthGuard],
-        component: CategoriesComponent,
-        title: 'Categorias '
       },
       {
         path: 'calendar',
