@@ -5,7 +5,7 @@ import { RegisterRequest } from "../../models/authapp/RegisterRequest";
 import { AuthRequest } from "../../models/authapp/AuthRequest";
 import { Observable } from "rxjs";
 import { UpdatePassRequestDTO } from "../../models/authapp/UpdatePassRequestDTO";
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 
 @Injectable({
@@ -41,12 +41,6 @@ export class AuthService {
         return localStorage.getItem(this.TOKEN_KEY);
     }
 
-
-    //Metodo para verificar si el usuario esta logueado
-    isLoggedIn(): boolean {
-        return !!this.getToken();
-    }
-
     //Metodo para verificar si la contraseña anterior es correcta
     passwordIsCorrect(password: string): Observable<boolean> {
         return this.http.get<boolean>(`${this.apiUrl}/validPassword/${password}`);
@@ -76,6 +70,19 @@ export class AuthService {
     getName(): string | null {
         return this.getDecodedToken()?.Name ?? null;
     }
+
+    isAuthenticated(): boolean {
+        const token = this.getToken();
+        if (!token) return false;
+
+        try {
+            const decoded = jwtDecode<any>(token);
+            return decoded.exp * 1000 > Date.now();
+        } catch {
+            return false;
+        }
+    }
+
 
     //Metodo para cerrar sesion
     logout(): void {
