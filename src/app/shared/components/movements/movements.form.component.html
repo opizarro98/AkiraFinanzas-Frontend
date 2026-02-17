@@ -32,44 +32,41 @@
                         <th class="px-4 py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">Tipo
                         </th>
                         <th class="px-4 py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                            Fecha</th>
-                        <th class="px-4 py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">
                             Monto</th>
                         <th class="px-4 py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                            Status</th>
+                            Fecha</th>
+                        <th class="px-4 py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                            Descripción</th>
                         <th class="px-4 py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">
                             <span class="sr-only">Action</span>
                         </th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100 dark:divide-white/[0.05]">
-                    @for (item of currentItems; track $index) {
+                    @for (movement of movementData; track $index) {
                     <tr>
                         <td class="px-4 py-4">
                             <div class="flex items-center gap-3">
-                                <div class="w-8 h-8">
-                                    <img width="32" height="32" [src]="item.image" class="size-8" alt="brand" />
-                                </div>
                                 <div>
                                     <span class="block font-medium text-gray-700 text-theme-sm dark:text-gray-400">
-                                        {{ item.action }}
+                                        {{ movement.movementId }}
                                     </span>
                                 </div>
                             </div>
                         </td>
                         <td class="px-4 py-4 text-gray-700 whitespace-nowrap text-theme-sm dark:text-gray-400">
-                            {{ item.date }}
-                        </td>
-                        <td class="px-4 py-4 text-gray-700 text-theme-sm dark:text-gray-400">
-                            {{ item.amount }}
-                        </td>
-                        <td class="px-4 py-4 text-gray-700 text-theme-sm dark:text-gray-400">
-                            {{ item.category }}
-                        </td>
-                        <td class="px-4 py-4 text-gray-700 text-theme-sm dark:text-gray-400">
-                            <app-badge size="sm" [color]="getBadgeColor(item.status)">
-                                {{ item.status }}
+                            <app-badge size="sm" [color]="getBadgeColor(movement.type)">
+                                {{ getMovementTypeLabel(movement.type) }}
                             </app-badge>
+                        </td>
+                        <td class="px-4 py-4 text-gray-700 text-theme-sm dark:text-gray-400">
+                            {{ movement.amount }}
+                        </td>
+                        <td class="px-4 py-4 text-gray-700 text-theme-sm dark:text-gray-400">
+                            {{ movement.movementDate | date: 'shortDate' }}
+                        </td>
+                        <td class="px-4 py-4 text-gray-700 text-theme-sm dark:text-gray-400">
+                            {{ movement.description }}
                         </td>
                         <td class="px-4 py-4 text-gray-700 text-theme-sm dark:text-gray-400">
                             <div class="relative inline-block">
@@ -85,7 +82,7 @@
                                         </button>
                                     </div>
                                     <div dropdown-content>
-                                        <button
+                                        <button (click)="handleViewMore(movement)"
                                             class="text-xs flex w-full rounded-lg px-3 py-2 text-left font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300">
                                             View More
                                         </button>
