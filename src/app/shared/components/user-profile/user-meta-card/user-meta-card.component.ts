@@ -40,6 +40,6 @@ export class UserMetaCardComponent {
 
   // Example user data (could be made dynamic)
   user = {
-    avatar: '/images/user/owner.jpg',
+    avatar: '/images/user/generic-user-top.jpg',
   };
 }

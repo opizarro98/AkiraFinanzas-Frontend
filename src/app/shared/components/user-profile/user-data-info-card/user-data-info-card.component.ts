@@ -57,7 +57,7 @@ export class UserDataInfoCardComponent {
   }
 
   loadData() {
-    this.username = this.authService.getUserName();
+    this.username = this.authService.getUsername();
     console.log("suername es: " + this.username);
   }
 

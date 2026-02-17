@@ -5,6 +5,8 @@ import { RegisterRequest } from "../../models/authapp/RegisterRequest";
 import { AuthRequest } from "../../models/authapp/AuthRequest";
 import { Observable } from "rxjs";
 import { UpdatePassRequestDTO } from "../../models/authapp/UpdatePassRequestDTO";
+import { jwtDecode } from 'jwt-decode';
+
 
 @Injectable({
     providedIn: 'root'
@@ -55,20 +57,25 @@ export class AuthService {
         return this.http.post<{ token: string }>(`${this.apiUrl}/UpdatePassword`, data);
     }
 
-    getUserName(): string | null {
+
+    getDecodedToken(): any {
         const token = this.getToken();
-        if (!token) {
-            return null;
-        }
+        if (!token) return null;
+
         try {
-            const payload = JSON.parse(atob(token.split('.')[1]));
-            return payload.sub;
+            return jwtDecode(token);
         } catch (error) {
-            console.error('Invalid token', error);
             return null;
         }
     }
 
+    getUsername(): string | null {
+        return this.getDecodedToken()?.sub ?? null;
+    }
+
+    getName(): string | null {
+        return this.getDecodedToken()?.Name ?? null;
+    }
 
     //Metodo para cerrar sesion
     logout(): void {
