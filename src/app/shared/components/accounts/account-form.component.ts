@@ -60,13 +60,10 @@ export class AccountFormComponent {
         });
     }
 
-
-
     ngOnInit() {
         this.loadAccounts();
         this.getTotalBalance();
     }
-
 
     // Metodo para guardar una cuenta nueva o actualizar una cuenta existente
     SaveAccount() {
@@ -78,13 +75,13 @@ export class AccountFormComponent {
             const formData = this.accountForm.value;
             formData.type = this.selectedValue;
             this.accountService.createAccount(formData).subscribe({
-                next: (response) => {
+                next: () => {
                     this.notificationService.show('success', 'Creación exitosa', 'Cuenta creada correctamente');
                     this.loadAccounts();
                     this.closeModal();
                     this.accountForm.reset();
                 },
-                error: (error) => {
+                error: () => {
                     this.notificationService.show('error', 'Error', 'No se pudo crear la cuenta');
                 }
             });
@@ -94,20 +91,19 @@ export class AccountFormComponent {
             console.log('Datos del formulario para actualización:', formData);
             formData.type = this.selectedValue;
             this.accountService.updateAccount(formData).subscribe({
-                next: (response) => {
+                next: () => {
                     this.notificationService.show('success', 'Actualización exitosa', 'Cuenta actualizada correctamente');
                     this.accountForm.reset();
                     this.loadAccounts();
                     this.closeModal();
                 },
-                error: (error) => {
+                error: () => {
                     this.closeModal();
                     this.notificationService.show('error', 'Error', 'No se pudo actualizar la cuenta');
                 }
             });
         }
     }
-
 
     // Metodo para cargar las cuentas del usuario
     loadAccounts() {
@@ -120,7 +116,6 @@ export class AccountFormComponent {
             }
         });
     }
-
 
     //Metodo para eliminar una cuenta existente
     deleteAccount(accountId: string) {
@@ -164,7 +159,10 @@ export class AccountFormComponent {
         this.isOpen = true;
     }
     //Cerrar el modal
-    closeModal() { this.isOpen = false; }
+    closeModal() {
+        this.accountForm.reset();
+        this.isOpen = false;
+    }
 
 
     //Metodo para manejar el cambio de selección en el componente Select

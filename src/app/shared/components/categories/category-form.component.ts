@@ -8,11 +8,11 @@ import { InputFieldComponent } from '../form/input/input-field.component';
 import { LabelComponent } from '../form/label/label.component';
 import { SelectComponent } from '../form/select/select.component';
 import { ConfirmModalComponent } from '../ui/modalConfirm/confirmModal.component';
-import { AccountResponseDTO } from '../../models/account/AccountResponseDTO';
-import { AccountService } from '../../services/account/account.service';
 import { ModalService } from '../../services/modal.service';
 import { NotificationService } from '../../services/notification.service';
-import { AccountTypeEnum } from '../../models/AccountTypeEnum';
+import { CategoryResponseDTO } from '../../models/categories/CategoryResponseDTO';
+import { CategoryService } from '../../services/category/category.service';
+import { CategoryTypeEnum } from '../../models/CategoryTypeEnum';
 
 @Component({
     selector: 'app-category-form',
@@ -36,8 +36,8 @@ export class CategoryFormComponent {
     isCreateMode: boolean = true;
     titelCategory: string = '';
     descriptionmodal: string = '';
-    accounts: AccountResponseDTO[] = [];
-    accountForm !: FormGroup;
+    categories: CategoryResponseDTO[] = [];
+    categoriesFrom !: FormGroup;
     isOpen = false;
     selectedValue = '';
     isConfirmOpen: boolean = false;
@@ -45,90 +45,84 @@ export class CategoryFormComponent {
     titleConfirm: string = '';
     messageConfirm: string = '';
 
-    options = Object.entries(AccountTypeEnum).map(([key, value]) => ({
+    options = Object.entries(CategoryTypeEnum).map(([key, value]) => ({
         value: value,
         label: key
     }));
 
-    constructor(private accountService: AccountService, public modal: ModalService, private fb: FormBuilder, private notificationService: NotificationService,) {
-        this.accountForm = this.fb.group({
-            accountId: [''],
+    constructor(private categoryService: CategoryService, public modal: ModalService, private fb: FormBuilder, private notificationService: NotificationService,) {
+        this.categoriesFrom = this.fb.group({
+            categoryId: [''],
             name: [''],
-            initialBalance: [''],
             type: ['']
         });
     }
-
-
 
     ngOnInit() {
         this.loadCategories();
     }
 
-
-    // Metodo para guardar una cuenta nueva o actualizar una cuenta existente
-    SaveAccount() {
-        if (this.accountForm.invalid) {
+    // Metodo para guardar una categoria nueva o actualizar una categoria existente
+    SaveCategory() {
+        if (this.categoriesFrom.invalid) {
             this.notificationService.show('error', 'Error', 'Por favor, completa todos los campos requeridos');
             return;
         }
         if (this.isCreateMode) {
-            const formData = this.accountForm.value;
+            const formData = this.categoriesFrom.value;
             formData.type = this.selectedValue;
-            this.accountService.createAccount(formData).subscribe({
-                next: (response) => {
-                    this.notificationService.show('success', 'Creación exitosa', 'Cuenta creada correctamente');
+            this.categoryService.createCategory(formData).subscribe({
+                next: () => {
+                    this.notificationService.show('success', 'Creación exitosa', 'categoria creada correctamente');
                     this.loadCategories();
                     this.closeModal();
-                    this.accountForm.reset();
+                    this.categoriesFrom.reset();
                 },
-                error: (error) => {
-                    this.notificationService.show('error', 'Error', 'No se pudo crear la cuenta');
+                error: () => {
+                    this.notificationService.show('error', 'Error', 'No se pudo crear la categoria');
                 }
             });
         }
         else {
-            const formData = this.accountForm.getRawValue();
+            const formData = this.categoriesFrom.getRawValue();
             console.log('Datos del formulario para actualización:', formData);
             formData.type = this.selectedValue;
-            this.accountService.updateAccount(formData).subscribe({
+            this.categoryService.updateCategory(formData).subscribe({
                 next: (response) => {
-                    this.notificationService.show('success', 'Actualización exitosa', 'Cuenta actualizada correctamente');
-                    this.accountForm.reset();
+                    this.notificationService.show('success', 'Actualización exitosa', 'Categoría actualizada correctamente');
+                    this.categoriesFrom.reset();
                     this.loadCategories();
                     this.closeModal();
                 },
                 error: (error) => {
                     this.closeModal();
-                    this.notificationService.show('error', 'Error', 'No se pudo actualizar la cuenta');
+                    this.notificationService.show('error', 'Error', 'No se pudo actualizar la categoría');
                 }
             });
         }
     }
 
-
-    // Metodo para cargar las cuentas del usuario
+    // Metodo para cargar las categorias del usuario
     loadCategories() {
-        this.accountService.getAccounts().subscribe({
+        this.categoryService.getCategories().subscribe({
             next: (response) => {
-                this.accounts = response;
+                this.categories = response;
             },
             error: (error) => {
-                console.error('Error fetching accounts:', error);
+                console.error('Error fetching categories:', error);
             }
         });
     }
 
-
-    //Metodo para eliminar una cuenta existente
-    deleteAccount(accountId: string) {
-        this.accountService.deleteAccount(accountId).subscribe({
+    //Metodo para eliminar una categoria existente
+    deleteCategory(categoryId: string) {
+        this.categoryService.deleteCategory(categoryId).subscribe({
             next: (success) => {
                 if (success) {
-                    this.notificationService.show('success', 'Eliminación exitosa', 'Cuenta eliminada correctamente');
+                    this.notificationService.show('success', 'Eliminación exitosa', 'Categoría eliminada correctamente');
                     this.loadCategories();
                 } else {
-                    this.notificationService.show('error', 'Error', 'No se pudo eliminar la cuenta');
+                    this.notificationService.show('error', 'Error', 'No se pudo eliminar la categoría');
                 }
                 this.isConfirmOpen = false;
             },
@@ -139,30 +133,32 @@ export class CategoryFormComponent {
         });
     }
 
-    //Abrir modal para crear una nueva cuenta
+    //Abrir modal para crear una nueva categoria
     openCreateModal() {
         this.isCreateMode = true;
-        this.titelCategory = 'Nueva cuenta';
-        this.descriptionmodal = 'Crea una nueva cuenta.';
+        this.titelCategory = 'Nueva categoría';
+        this.descriptionmodal = 'Crea una nueva categoría.';
         this.selectedValue = '';
         this.isOpen = true;
     }
-    //Abrir modal para editar una cuenta existente
-    openEditModal(account: AccountResponseDTO) {
+    //Abrir modal para editar una categoria existente
+    openEditModal(category: CategoryResponseDTO) {
         this.isCreateMode = false;
-        this.titelCategory = 'Editar cuenta';
-        this.descriptionmodal = 'Edita una cuenta existente.';
-        this.accountForm.patchValue({
-            accountId: account.accountId,
-            name: account.name,
-            initialBalance: account.balance,
-            type: account.type
+        this.titelCategory = 'Editar categoría';
+        this.descriptionmodal = 'Edita una categoría existente.';
+        this.categoriesFrom.patchValue({
+            categoryId: category.categoryId,
+            name: category.name,
+            type: category.type
         });
-        this.selectedValue = account.type;
+        this.selectedValue = category.type;
         this.isOpen = true;
     }
     //Cerrar el modal
-    closeModal() { this.isOpen = false; }
+    closeModal() {
+        this.categoriesFrom.reset();
+        this.isOpen = false;
+    }
 
 
     //Metodo para manejar el cambio de selección en el componente Select
@@ -170,22 +166,22 @@ export class CategoryFormComponent {
         this.selectedValue = value;
     }
 
-    // Metodo para obtener la etiqueta legible del tipo de cuenta
-    getAccountTypeLabel(type: AccountTypeEnum): string {
-        return this.accountTypeLabelMap[type] ?? type;
+    // Metodo para obtener la etiqueta legible del tipo de categoria
+    getCategoryTypeLabel(type: CategoryTypeEnum): string {
+        return this.categoryTypeLabelMap[type] ?? type;
     }
     // Mapeo para convertir los valores del enum en etiquetas legibles
-    accountTypeLabelMap: Record<AccountTypeEnum, string> = {
-        [AccountTypeEnum.Banco]: 'Banco',
-        [AccountTypeEnum.Efectivo]: 'Efectivo'
+    categoryTypeLabelMap: Record<CategoryTypeEnum, string> = {
+        [CategoryTypeEnum.Gasto]: 'GASTO',
+        [CategoryTypeEnum.Ingreso]: 'INGRESO'
     };
 
 
     openDeleteModal(accountId: string) {
         this.selectedAccountId = accountId;
         this.isConfirmOpen = true;
-        this.titleConfirm = 'Eliminar cuenta';
-        this.messageConfirm = '¿Estás seguro que deseas eliminar esta cuenta?';
+        this.titleConfirm = 'Eliminar categoría';
+        this.messageConfirm = '¿Estás seguro que deseas eliminar esta categoría?';
     }
 
 }

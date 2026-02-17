@@ -10,7 +10,6 @@ import { BasicPersonalDataResponseDTO } from "../../models/person/BasicPersonalD
 export class PersonService {
 
     apiUrl: string;
-    private readonly TOKEN_KEY = 'auth_token';
 
     constructor(private http: HttpClient) {
         this.apiUrl = environment.urlHost + 'person';
