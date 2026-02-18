@@ -7,6 +7,11 @@ import { MovementResponseDTO } from '../../models/movements/MovementResponseDTO'
 import { MovementService } from '../../services/movements/movement.service';
 import { NotificationService } from '../../services/notification.service';
 import { MovementTypeEnum } from '../../models/MovementTypeEnum';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ModalComponent } from '../ui/modal/modal.component';
+import { InputFieldComponent } from '../form/input/input-field.component';
+import { LabelComponent } from '../form/label/label.component';
+import { SelectComponent } from '../form/select/select.component';
 @Component({
     selector: 'app-movements-form',
     imports: [
@@ -14,6 +19,13 @@ import { MovementTypeEnum } from '../../models/MovementTypeEnum';
         ButtonComponent,
         TableDropdownComponent,
         BadgeComponent,
+        ModalComponent,
+        ButtonComponent,
+        InputFieldComponent,
+        LabelComponent,
+        SelectComponent,
+        FormsModule,
+        ReactiveFormsModule,
     ],
     templateUrl: './movements.form.component.html',
     styles: ``
@@ -22,10 +34,25 @@ export class MovementsFormComponent {
     movementData: MovementResponseDTO[] = []; // Aquí se almacenarán los movimientos obtenidos del servicio
     currentPage = 1;
     itemsPerPage = 10;
+    isOpenModal = false;
+    movementFormData !: FormGroup;
+    isExpense = false;
+    isIncome = false;
+    selectedValueType = '';
+    options = Object.entries(MovementTypeEnum).map(([key, value]) => ({
+        value: value,
+        label: key
+    }));
 
-
-    constructor(private movementService: MovementService, private notificationService: NotificationService) {
-
+    constructor(private fb: FormBuilder, private movementService: MovementService, private notificationService: NotificationService) {
+        this.movementFormData = this.fb.group({
+            type: ['',],
+            amount: ['',],
+            description: ['',],
+            sourceAccountId: ['',],
+            targetAccountId: ['',],
+            categoryId: ['',]
+        });
     }
 
 
@@ -47,9 +74,41 @@ export class MovementsFormComponent {
         );
     }
 
+    saveData() {
+
+    }
+
+    //Abrir modal para crear una nueva categoria
+    openModal() {
+        this.isOpenModal = true;
+    }
+
+    //Cerrar el modal
+    closeModal() {
+        this.movementFormData.reset();
+        this.isOpenModal = false;
+        this.selectedValueType = '';
+    }
+
+
+    //Metodo para manejar el cambio de selección en el componente Select
+    handleSelectChange(value: string) {
+        this.selectedValueType = value;
+
+        this.isExpense = value === MovementTypeEnum.Egreso;
+        this.isIncome = value === MovementTypeEnum.Ingreso;
+
+        if (!this.isExpense && !this.isIncome) {
+            this.isExpense = true;
+            this.isIncome = true;
+        }
+    }
+
+
     get totalPages(): number {
         return Math.ceil(this.movementData.length / this.itemsPerPage);
     }
+
 
     get currentItems(): MovementResponseDTO[] {
         const start = (this.currentPage - 1) * this.itemsPerPage;
