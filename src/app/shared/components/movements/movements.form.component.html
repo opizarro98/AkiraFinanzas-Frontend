@@ -181,7 +181,7 @@
                         <div class="col-span-2 lg:col-span-1">
                             <app-label>Tipo de Movimiento</app-label>
                             <app-select [options]="options" placeholder="Seleccione una opción"
-                                [value]="selectedValueType" (valueChange)="handleSelectChange($event)"
+                                [value]="selectedValueTypeMovement" (valueChange)="handleSelectChangeMovement($event)"
                                 className="dark:bg-dark-900">
                             </app-select>
                         </div>
@@ -201,11 +201,17 @@
                     <div class="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
                         <div class="col-span-2 lg:col-span-1" [hidden]="!isExpense">
                             <app-label>Cuenta Origen</app-label>
-                            <app-input-field type="text" formControlName="sourceAccountId" />
+                            <app-select [options]="accounts" optionLabel="name" optionValue="accountId"
+                                placeholder="Seleccione una cuenta" [value]="selectedValueSourceAccount"
+                                (valueChange)="handleSelectChangeSourceAccount($event)">
+                            </app-select>
                         </div>
                         <div class="col-span-2 lg:col-span-1" [hidden]="!isIncome">
                             <app-label>Cuenta Destino</app-label>
-                            <app-input-field type="text" formControlName="targetAccountId" />
+                            <app-select [options]="accounts" optionLabel="name" optionValue="accountId"
+                                placeholder="Seleccione una cuenta" [value]="selectedValueTargetAccount"
+                                (valueChange)="handleSelectChangeTargetAccount($event)" className="dark:bg-dark-900">
+                            </app-select>
                         </div>
                         <div class="col-span-2 lg:col-span-1">
                             <app-label>Categoría</app-label>

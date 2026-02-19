@@ -12,7 +12,9 @@ export interface Option {
   templateUrl: './select.component.html',
 })
 export class SelectComponent implements OnInit {
-  @Input() options: Option[] = [];
+  @Input() options: any[] = [];
+  @Input() optionLabel: string = 'label';
+  @Input() optionValue: string = 'value';
   @Input() placeholder: string = 'Select an option';
   @Input() className: string = '';
   @Input() defaultValue: string = '';
