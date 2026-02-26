@@ -55,6 +55,7 @@ export class InputFieldComponent implements ControlValueAccessor {
   @Input() error: boolean = false;
   @Input() hint?: string;
   @Input() className: string = '';
+  @Input() textTransform: 'uppercase' | 'lowercase' | 'capitalize' | 'none' = 'none';
 
   @Output() blur = new EventEmitter<void>();
 
@@ -94,7 +95,22 @@ export class InputFieldComponent implements ControlValueAccessor {
 
   onInput(event: Event): void {
     const input = event.target as HTMLInputElement;
-    const newValue = this.type === 'number' ? +input.value : input.value;
+    let newValue: string | number = input.value;
+
+    if (this.type !== 'number') {
+      if (this.textTransform === 'uppercase') {
+        newValue = newValue.toString().toUpperCase();
+      } else if (this.textTransform === 'lowercase') {
+        newValue = newValue.toString().toLowerCase();
+      } else if (this.textTransform === 'capitalize') {
+        newValue = this.capitalizeWords(newValue.toString());
+      }
+
+      input.value = newValue as string;
+    } else {
+      newValue = +newValue;
+    }
+
     this.value = newValue;
     this.onChange(newValue);
   }
@@ -102,5 +118,11 @@ export class InputFieldComponent implements ControlValueAccessor {
   handleBlur(): void {
     this.onTouchedFn();   // Marca como touched en Angular Forms
     this.blur.emit();     // Notifica al componente padre
+  }
+
+  private capitalizeWords(value: string): string {
+    return value
+      .toLowerCase()
+      .replace(/\b\w/g, char => char.toUpperCase());
   }
 }
