@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
-import { AccountFormComponent } from '../../shared/components/accounts/account-form.component';
 import { MovementsFormComponent } from '../../shared/components/movements/movements.form.component';
 import { AccountCardComponent } from '../../shared/components/accounts/account-cards/account-card.component';
 
 @Component({
-  selector: 'app-account',
+  selector: 'app-operations-hub',
   imports: [
-    AccountFormComponent,
+    AccountCardComponent,
+    MovementsFormComponent,
   ],
-  templateUrl: './account.component.html',
+  templateUrl: './operations-hub.component.html',
   styles: ``
 })
-export class AccountComponent {
+export class OperationsHubComponent {
 
 }

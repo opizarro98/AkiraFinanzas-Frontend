@@ -22,6 +22,7 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 import { AuthGuard } from './config/AuthGuard';
 import { AccountComponent } from './pages/accounts/account.component';
 import { MovementsComponent } from './pages/movements/movements.component';
+import { OperationsHubComponent } from './pages/OperationsHubComponent/operations-hub.component';
 
 export const routes: Routes = [
   {
@@ -58,6 +59,11 @@ export const routes: Routes = [
         component: MovementsComponent,
         title: 'Movimientos'
       },
+      {
+        path: 'financialCenter',
+        component: OperationsHubComponent,
+        title: 'Centro Financiero'
+      }
     ]
   },
   // auth pages

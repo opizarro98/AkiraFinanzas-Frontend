@@ -46,6 +46,8 @@
                         <th class="px-4 py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">
                             Monto</th>
                         <th class="px-4 py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                            Cuenta</th>
+                        <th class="px-4 py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">
                             Fecha</th>
                         <th class="px-4 py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">
                             Descripción</th>
@@ -73,6 +75,21 @@
                         </td>
                         <td class="px-4 py-4 text-gray-700 text-theme-sm dark:text-gray-400">
                             {{ movement.amount }}
+                            <span class="block ml-4 text-xs font-light text-gray-400 dark:text-gray-500">
+                                {{ movement.balanceAfter }}
+                            </span>
+                        </td>
+                        <td class="px-4 py-4 text-gray-700 text-theme-sm dark:text-gray-400">
+                            @if(movement.type === 'INCOME') {
+                            {{ movement.targetAccountName }}
+                            } @else if(movement.type === 'EXPENSE') {
+                            {{ movement.sourceAccountName }}
+                            }@else {
+                            {{ movement.sourceAccountName }}
+                            <span class="block font-light text-gray-700 text-theme-sm dark:text-gray-400">
+                                → {{ movement.targetAccountName }}
+                            </span>
+                            }
                         </td>
                         <td class="px-4 py-4 text-gray-700 text-theme-sm dark:text-gray-400">
                             {{ movement.movementDate | date: 'shortDate' }}
